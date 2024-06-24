@@ -1,0 +1,141 @@
+.enhanced-navbar {
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 15px 20px;
+  transition: all 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .enhanced-navbar {
+    padding: 10px 15px;
+  }
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.brand-hover {
+  font-weight: 700;
+  color: #333;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-hover::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background-color: #007bff;
+  transition: all 0.3s ease;
+}
+
+.brand-hover:hover {
+  color: #007bff;
+}
+
+.brand-hover:hover::before {
+  left: 0;
+}
+
+.nav-link-hover {
+  position: relative;
+  color: #555;
+  margin: 0 15px;
+  transition: all 0.3s ease;
+  padding: 5px 0;
+}
+
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #007bff;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-link-hover:hover {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.nav-link-hover:hover::after {
+  transform: scaleX(1);
+}
+
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 10px 0;
+}
+
+.dropdown-item {
+  transition: all 0.3s ease;
+  padding: 8px 20px;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: 2px solid #dc3545;
+  color: #dc3545;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.logout-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #dc3545;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.logout-btn:hover {
+  color: white;
+}
+
+.logout-btn:hover::before {
+  left: 0;
+}
+
+.logout-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+.logout-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 576px) {
+  .nav-link-hover {
+    margin: 5px 0;
+  }
+  
+  .logout-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
