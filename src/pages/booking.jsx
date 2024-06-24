@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Container, Row, Col, Modal, Form, Button } from "react-bootstrap";
-import DatePicker from "react-datepicker";
+import { Container, Row, Col,} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "../CSS/Seatselection.css";
-import seatsImage from "../assets/seats-svg-s4-final.svg";
+import { ReactComponent as SeatsImage } from "../assets/seats-svg-s4-final.svg"; // Ensure the correct import path
 
 function BookingPage() {
   const [show, setShow] = useState(false);
@@ -40,12 +39,7 @@ function BookingPage() {
       </Row>
       <Row>
         <Col lg={10} className="svg-container">
-          <img
-            src={seatsImage}
-            alt="Seats"
-            onClick={handleSeatClick}
-            className="seats-image"
-          />
+          <SeatsImage onClick={handleSeatClick} className="seats-image" />
         </Col>
       </Row>
     </Container>
