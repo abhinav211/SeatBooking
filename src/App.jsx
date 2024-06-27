@@ -1,22 +1,46 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NavScrollExample from "./components/Navbar";
-import BookingPage from "./pages/booking";
-import SeatBookingDropdown from "./components/dropDown.jsx";
-import Welcome from "./pages/Welcome.jsx"
-import './index.css';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import NavbarHeader from "./components/Header/Navbar.jsx";
+import SeatLayout from "./pages/SeatBooking/seatLayout.jsx";
+import Welcome from "./pages/Welcome.jsx";
+import BookSeat from "./pages/bookSeat.jsx";
+import "./index.css";
+
 function App() {
+  const [showNavbar, setShowNavbar] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/seat") {
+      setShowNavbar(false);
+    } else {
+      setShowNavbar(true);
+    }
+  }, [location]);
+
   return (
-    <Router>
-      <NavScrollExample />
+    <>
+      {showNavbar && <NavbarHeader />}
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/booking" element={<BookingPage />} />
-        <Route path="/book-seat" element={<SeatBookingDropdown />} />
-        <Route path="/seat" element={<BookingPage />} />
+        <Route path="/bookseat" element={<BookSeat />} />
+        <Route path="/seat" element={<SeatLayout />} />
       </Routes>
+    </>
+  );
+}
+
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
     </Router>
   );
 }
 
-export default App;
+export default AppWrapper;
