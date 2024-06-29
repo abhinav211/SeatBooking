@@ -1,52 +1,93 @@
 import React, { useState } from "react";
-import { Dropdown, Button, Container } from "react-bootstrap";
+import {
+  Dropdown,
+  DropdownButton,
+  Button,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
-const floors = { 8: ["S1", "S2", "S3", "S4"] };
+
+const floors = {
+  8: ["Module S1", "Module S2", "Module S3", "Module S4"],
+};
 
 const SeatBookingDropdown = () => {
-  const [floor, setFloor] = useState(null);
-  const [room, setRoom] = useState(null);
+  const [selectedFloor, setSelectedFloor] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const navigate = useNavigate();
 
+  const handleFloorSelect = (floor) => {
+    setSelectedFloor(floor);
+    setSelectedRoom(null);
+  };
+
+  const handleRoomSelect = (module) => {
+    setSelectedRoom(module);
+  };
+
   const handleBooking = () => {
-    navigate("/seat", { state: { floor, room } });
+    navigate("/seat", {
+      state: { floor: selectedFloor, module: selectedRoom },
+    });
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center vh-100">
-      <div className="text-center">
-        <Dropdown className="mb-3">
-          <Dropdown.Toggle>{floor ? `Floor ${floor}` : "Select Floor"}</Dropdown.Toggle>
-          <Dropdown.Menu>
-            {Object.keys(floors).map((f) => (
-              <Dropdown.Item key={f} onClick={() => setFloor(f)}>
-                Floor {f}
+    <Container
+      className="d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Row className="justify-content-center w-100">
+        <Col xs={12} sm={8} md={6} lg={4} className="text-center">
+          <DropdownButton
+            id="floor-dropdown"
+            title={selectedFloor ? `Floor ${selectedFloor}` : "Select Floor"}
+            className="mb-3 w-100"
+          >
+            {Object.keys(floors).map((floor) => (
+              <Dropdown.Item
+                key={floor}
+                onClick={() => handleFloorSelect(floor)}
+              >
+                Floor {floor}
               </Dropdown.Item>
             ))}
-          </Dropdown.Menu>
-        </Dropdown>
+          </DropdownButton>
 
-        {floor && (
-          <Dropdown className="mb-3">
-            <Dropdown.Toggle>{room || "Select Room"}</Dropdown.Toggle>
-            <Dropdown.Menu>
-              {floors[floor].map((r) => (
-                <Dropdown.Item key={r} onClick={() => setRoom(r)}>
-                  Module {r}
+          {selectedFloor && (
+            <DropdownButton
+              id="room-dropdown"
+              title={selectedRoom || "Select Room"}
+              className="mb-3 w-100"
+            >
+              {floors[selectedFloor].map((module) => (
+                <Dropdown.Item
+                  key={module}
+                  onClick={() => handleRoomSelect(module)}
+                >
+                  {module}
                 </Dropdown.Item>
               ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
+            </DropdownButton>
+          )}
 
-        {room && (
-          <div>
-            <p>Floor: {floor}, Module: {room}</p>
-            <Button onClick={handleBooking}>Submit</Button>
-          </div>
-        )}
-      </div>
+          {selectedRoom && (
+            <div className="mt-3">
+              <p>Selected Floor: {selectedFloor}</p>
+              <p>Selected Module: {selectedRoom}</p>
+              <Button
+                variant="primary"
+                onClick={handleBooking}
+                className="w-100"
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };
