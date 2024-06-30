@@ -1,9 +1,6 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import {
-  BackArrowIcon,
-  ChairIcon,
-} from "../../assets/IconSvg.jsx";
+import { BackArrowIcon, ChairIcon } from "../../assets/IconSvg.jsx";
 
 const SeatDetailsNavbar = ({
   selectedFloor,
@@ -11,6 +8,10 @@ const SeatDetailsNavbar = ({
   selectedDate,
   onBackClick,
 }) => {
+  const formattedDate = selectedDate
+    ? selectedDate.toDateString()
+    : "Not selected";
+
   return (
     <Navbar
       bg="danger"
@@ -18,14 +19,18 @@ const SeatDetailsNavbar = ({
       expand="lg"
       className="py-2 shadow-sm"
       style={{
-        position: 'sticky',
+        position: "sticky",
         top: 0,
         zIndex: 1000,
       }}
     >
       <Container fluid>
         <Navbar.Brand className="d-flex align-items-center">
-          <BackArrowIcon onClick={onBackClick} className="me-3" style={{ cursor: 'pointer' }} />
+          <BackArrowIcon
+            onClick={onBackClick}
+            className="me-3"
+            style={{ cursor: "pointer" }}
+          />
           <ChairIcon className="me-2" />
           <span className="fw-bold">Seat Booking</span>
         </Navbar.Brand>
@@ -39,7 +44,7 @@ const SeatDetailsNavbar = ({
               <strong>Module:</strong> {selectedModule || "Not selected"}
             </Nav.Item>
             <Nav.Item>
-              <strong>Date:</strong> {selectedDate || "Not selected"}
+              <strong>Date:</strong> {formattedDate}
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>

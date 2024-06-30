@@ -5,11 +5,13 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import { Provider } from "react-redux";
 import NavbarHeader from "./components/Header/Navbar.jsx";
 import SeatLayout from "./pages/SeatBooking/seatLayout.jsx";
-import Welcome from "./pages/Welcome.jsx";
+import Welcome from "./pages/Home/Welcome.jsx";
 import BookSeat from "./pages/bookSeat.jsx";
 import "./index.css";
+import Store from "../src/Store/store.jsx";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -27,7 +29,6 @@ function App() {
     <>
       {showNavbar && <NavbarHeader />}
       <Routes>
-        <Route path="/" element={<Welcome />} />
         <Route path="/bookseat" element={<BookSeat />} />
         <Route path="/seat" element={<SeatLayout />} />
       </Routes>
@@ -37,9 +38,11 @@ function App() {
 
 function AppWrapper() {
   return (
-    <Router>
-      <App />
-    </Router>
+    <Provider store={Store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   );
 }
 

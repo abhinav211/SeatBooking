@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import SeatDetailsNavbar from "../../components/seatBookingNavbar/seatDetailsNavbar.jsx";
 import SeatsSvg from "../../components/svgComponent/seatsSvg.jsx";
@@ -7,22 +8,17 @@ import SeatDetailsOffcanvas from "../../components/svgBottomFooter/SeatDetailsOf
 import "./seatLayout.css";
 
 function SeatLayout() {
-  const [selectedFloor, setSelectedFloor] = useState(null);
-  const [selectedModule, setSelectedModule] = useState(null);
   const [clickedSeat, setClickedSeat] = useState({ id: "", name: "" });
-  const [selectedDate, setSelectedDate] = useState(null);
   const [showSeatDetails, setShowSeatDetails] = useState(false);
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { selectedFloor, selectedRoom, selectedDate } = useSelector(
+    (state) => state.booking
+  );
 
-  useEffect(() => {
-    if (location.state) {
-      setSelectedFloor(location.state.floor);
-      setSelectedModule(location.state.room);
-      setSelectedDate(new Date(location.state.date).toDateString());
-    }
-  }, [location]);
+  console.log(useSelector(
+    (state) => state.booking
+  ))
+  const navigate = useNavigate();
 
   const handleSeatClick = (e) => {
     const seatElement = e.target.closest("g[id]");
@@ -47,15 +43,18 @@ function SeatLayout() {
     <div className="d-flex flex-column vh-100">
       <SeatDetailsNavbar
         selectedFloor={selectedFloor}
-        selectedModule={selectedModule}
-        selectedDate={selectedDate}
+        selectedModule={selectedRoom}
+        selectedDate={selectedDate ? new Date(selectedDate) : "Not selected"} // Ensure date is a Date object
         onBackClick={onBackClick}
       />
       <Container fluid className="flex-grow-1 d-flex flex-column">
         <Row className="flex-grow-1 overflow-auto">
           <Col className="d-flex justify-content-center align-items-center">
             <div className="w-100" style={{ maxWidth: "1200px" }}>
-              <SeatsSvg clickedSeat={clickedSeat} handleSeatClick={handleSeatClick} />
+              <SeatsSvg
+                clickedSeat={clickedSeat}
+                handleSeatClick={handleSeatClick}
+              />
             </div>
           </Col>
         </Row>
